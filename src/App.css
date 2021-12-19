@@ -1,24 +1,18 @@
-.App,.home-page {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.home-page-main {
-  position: relative;
+.App,.home {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-.tab-bar {
+.home .am-tabs-tab-bar-wrap {
   position: fixed;
   bottom: 0;
   width: 100vw;
-  height: 50px;
+  overflow: hidden;
 }
 
-.tab-bar .active {
+.active {
   color: #1677ff;
 }
+

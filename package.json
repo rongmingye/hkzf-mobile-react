@@ -38,6 +38,7 @@
   "devDependencies": {
     "antd-mobile": "^2.3.4",
     "antd-mobile-icons": "^0.2.2",
+    "axios": "^0.24.0",
     "react-router-dom": "^6.1.1"
   }
 }

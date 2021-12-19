@@ -82,6 +82,9 @@ import 'antd-mobile/dist/antd-mobile.css'
 - 嵌套路由：路由内部包含路由
 - 用Home组件表示父路由的内容
 - 用News组件表示子路由的内容
+- Route组件实现展示
+- Routes组件包裹Route组件
+- BrowserRouter路由模式，只需一个
 
 #### 2.3 实现tabbar
 - 使用antd-mobile库，npm install -D antd-mobile
@@ -91,3 +94,32 @@ import 'antd-mobile/dist/antd-mobile.css'
 - 修改字体图标大小
 - 调整tabbar的菜单位置，固定在最底部
 - 点击tabbar.item切换路由，设置默认tabbar默认高亮
+
+##  3. 首页模块
+
+#### 3.1 首页路由处理
+- 修改首页路由规则为：/home
+- 配合默认路由，实现默认跳转到/home
+- Navigate组件实现重定项，to属性指定跳转到路由地址
+- Outlet组件实现子路由显示视图
+
+``` js
+<Route exact path="/" element={<Navigate to="/home" />} ></Route>
+<Route exact path="/home" element={<First />}></Route>
+```
+
+
+#### 3.2 轮播图
+基本使用
+- 导入antd-mobile的 Carousel 组件
+
+获取轮播图数据
+- 安装axios：npm i -D axios
+- 在组件中导入axios
+- 在state中添加轮播图数据：swipers
+- 新建getSwipers方法获取轮播图数据，更新swipers状态
+- 在UseEffect中调用getSwipers
+- 使用获取到的数据渲染轮播图
+
+导航菜单
+- 使用antd-mobile的flex组件布局

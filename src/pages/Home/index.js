@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom"
+import { Route, Routes, useNavigate, useLocation, Outlet } from "react-router-dom"
 import { TabBar } from 'antd-mobile'
 import {
   AaOutline,
@@ -8,14 +8,11 @@ import {
   UserOutline,
 } from 'antd-mobile-icons'
 
-import News from '../News'
-import Mine from '../Mine'
-import FindHouse from '../FindHouse'
-import First from '../First'
+const activeColor = '#1677ff'
 
-let tabs = [
+const tabs = [
   {
-    path: '/',
+    path: '/home',
     title: '首页',
     icon: <AaOutline />,
     selectedIcon: <AaOutline style={{color: activeColor}} />,
@@ -43,15 +40,14 @@ let tabs = [
 export default function Home(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeKey, setActiveKey] = useState(location.pathname || 'first')  
-  const activeColor = '#1677ff'
+  const [activeKey, setActiveKey] = useState(location.pathname || '/home')  
 
-  let handleTab = (item) => {
+  const handleTab = (item) => {
     navigate(item.path)
     setActiveKey(item.path)
   }
 
-  let renderTarbarItem = () => {
+  const renderTarbarItem = () => {
     return tabs.map(item => 
       <TabBar.Item 
         key={item.path} 
@@ -63,21 +59,15 @@ export default function Home(props) {
     )
   }
 
-  return <div className="home-page">
-    <div className="home-page-main">
-      {/* 渲染子路由 */}
-      <Routes>
-        <Route path="/" element={<First />}></Route>
-        <Route path="/home/findhouse" element={<FindHouse />}></Route>
-        <Route path="/home/news" element={<News />}></Route>
-        <Route path="/home/mine" element={<Mine />}></Route>
-      </Routes>
-    </div>
-    <div className="tab-bar">
-      {/* tabbar */}
-      <TabBar barTintColor="#fff" tintColor="1677ff" noRenderContent={true} onChange={setActiveKey}>
-          {renderTarbarItem()}
-        </TabBar>
-      </div>
+  return <div className="home">
+    {/* 渲染子路由 */}
+    <Outlet />
+    <Routes>
+     
+    </Routes>
+    {/* tabbar */}
+    <TabBar barTintColor="#fff" tintColor={activeColor} noRenderContent={true} onChange={setActiveKey}>
+      {renderTarbarItem()}
+    </TabBar>
   </div>
 }
