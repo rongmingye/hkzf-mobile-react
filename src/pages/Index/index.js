@@ -22,6 +22,15 @@ const groudsData = Array.from(new Array(4)).map((item, i) => ({
   imgSrc: `https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png`,
 }))
 
+
+const newsData = Array.from(new Array(6)).map((item, i) => ({
+  id: i,
+  title: `置业选择 ｜ 安贞西里 三室两厅 河间的古雅别院`,
+  label: '新华网',
+  time: new Date().getTime(),
+  imgSrc: `https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png`,
+}))
+
 export default function Index() {
   const navigate = useNavigate();
 
@@ -99,6 +108,7 @@ export default function Index() {
   }
 
   /////////////// 租房小组 /////////////////
+
   const [grouds, setGrouds] = useState(groudsData)
   const getGrouds = async () => {
     const res = await axios.get('http://localhost:8080/home/grouds', {
@@ -111,6 +121,37 @@ export default function Index() {
   useEffect(() => {
     // getGrouds()
   }, [])
+
+  /////////// 最新资讯 /////////////////
+
+  const [news, setNews] = useState(newsData)
+  const getNews = async () => {
+    const res = await axios.get('http://localhost:8080/home/grouds', {
+      params: {
+        area: ''
+      }
+    })
+    setNews(res.data.body)
+  }
+
+  useEffect(() => {
+    // getNews()
+  }, [])
+
+  const renderNews = () => {
+    return news.map(item => (
+      <Flex className='news-item' direction='row' justify='around' align='start' >
+        <img src={item.imgSrc} />
+        <Flex direction='column' justify='between' className='new-item-right'>
+          <h3 className='font-size-14'>{item.title}</h3>
+          <Flex direction="row" justify='between' className='new-item-bottom'>
+            <div className='font-size-12 font-desc'>{item.label}</div>
+            <div className='font-size-12 font-desc'>{item.time}</div>
+          </Flex>
+        </Flex>
+      </Flex>
+    ))
+  }
 
   return (
     <div>
@@ -139,7 +180,6 @@ export default function Index() {
           columnNum={2} 
           square={false}
           hasLine={false}
-
           renderItem={(item) => (
             <Flex key={item.id} className='group-item' justify='around'>
               <div className='desc'>
@@ -149,6 +189,12 @@ export default function Index() {
               <img src={item.imgSrc} alt=""/>
             </Flex>
           )}></Grid>
+      </div>
+
+      {/* 最新资讯 */}
+      <div className='news'>
+        <h3 className='news-title'>最新资讯</h3>
+        {renderNews()}
       </div>
     </div>
   );
