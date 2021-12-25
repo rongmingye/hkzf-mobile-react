@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Carousel, Flex, Grid } from 'antd-mobile';
 import axios from 'axios'
 import './index.scss'
+
+import Search from './search'
 
 import nav1 from '../../assets/images/nav-1.png'
 import nav2 from '../../assets/images/nav-2.png'
@@ -145,8 +147,8 @@ export default function Index() {
         <Flex direction='column' justify='between' className='new-item-right'>
           <h3 className='font-size-14'>{item.title}</h3>
           <Flex direction="row" justify='between' className='new-item-bottom'>
-            <div className='font-size-12 font-desc'>{item.label}</div>
-            <div className='font-size-12 font-desc'>{item.time}</div>
+            <div className='font-size-12 color-info'>{item.label}</div>
+            <div className='font-size-12 color-info'>{item.time}</div>
           </Flex>
         </Flex>
       </Flex>
@@ -155,17 +157,20 @@ export default function Index() {
 
   return (
     <div>
+      
       {/* 轮播图 */}
       <div className="swiper">
         <Carousel
           autoplay={true}
           infinite
-          beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-          afterChange={index => console.log('slide to', index)}
         >
           {renderSwipers()}
         </Carousel>
+        {/* 搜索栏 */}
+        <Search></Search>
       </div>
+
+      
       
       {/* 导航菜单 */}
       <Flex className="nav">

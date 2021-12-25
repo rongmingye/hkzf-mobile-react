@@ -2,7 +2,41 @@
 @import '/src/assets/css/_base.scss';
 
 .swiper {
+	position: relative;
 	height: 212px;
+}
+
+.search-box {
+	position: absolute;
+	top: 20px;
+	width: 100%;
+	padding: 0 10px;
+	.search {
+		padding: 8px 10px;		
+		border-radius: 4px;
+		flex: 1;	
+		background-color: #fff;
+		font-size: 12px;
+		.location {
+			.icon-arrow {
+				font-size: 12px;
+			}
+		}
+		.form {
+			margin-left: 10px;
+			flex: 1;
+			color: $color_info;
+			.icon-seach {
+				margin-right: 5px;
+				font-size: 12px;
+			}	
+		}
+	}
+	.icon-map {
+		margin-left: 10px;
+		font-size: 25px;
+		color: #fff;
+	}
 }
 
 .nav {
@@ -26,8 +60,7 @@
 	.group-title {
 		position: relative;
 		font-size: 14px;
-		padding: 5px 10px;
-		padding: 5px 15px;
+		padding: 8px 15px;
 		background-color: #efefef;
 
 		.more {
@@ -45,7 +78,7 @@
 
 		.info {
 			font-size: 12px;
-			color: $infoColor;
+			color: $color_info;
 		}
 
 		img {
