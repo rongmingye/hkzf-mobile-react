@@ -42,6 +42,7 @@
     "axios": "^0.24.0",
     "node-sass": "^7.0.0",
     "react-router-dom": "^6.1.1",
+    "react-virtualized": "^9.22.3",
     "sass": "^1.45.1",
     "sass-loader": "^12.4.0"
   }

@@ -1,0 +1,52 @@
+@import '/src/assets/css/color';
+
+.cityList {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 45px;
+
+  .am-navbar {
+    margin-top: -45px;
+  }
+
+  .am-navbar-light .am-navbar-title {
+    color: $color_black;
+  }
+
+  .city {
+    line-height: 30px;
+    padding: 0 10px;
+    .title {
+      color: $color_info;
+      font-size: 12px;
+    }
+    .name {
+      color: $color_black;
+      border-bottom: 1px solid #eee;
+    } 
+  }
+
+  .city-index {
+    position: absolute;
+    right: 10px;
+    width: 20px;
+
+    .city-index-item {
+      width: 20px;
+      height: 20px;
+      margin-top: 10px;
+      line-height: 20px;
+      text-align: center;
+      color: $color_info;
+    }
+
+    .index-active {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      color: #fff;
+      background-color: $color_success;
+    }
+  }
+}
