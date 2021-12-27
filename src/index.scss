@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   touch-action: pan-y;
+  font-size: 14px;
 }
 
 html, body {
@@ -15,6 +16,6 @@ html, body {
   background-color: #fff;
 }
 
-h2 {
-  margin: 0;
+ul {
+  list-style: none;
 }

@@ -6,6 +6,7 @@ import News from './pages/News'
 import Mine from './pages/Mine'
 import FindHouse from './pages/FindHouse'
 import Index from './pages/Index'
+import Map from './pages/Map'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/home/mine" element={<Mine />}></Route>
           </Route>
           <Route excat path="/citylist" element={<CityList />} />
+          <Route excat path="/map" element={<Map />} />
         </Routes>
       </div>
     </Router>

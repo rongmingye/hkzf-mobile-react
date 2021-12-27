@@ -1,22 +1,44 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Carousel, Flex } from 'antd-mobile';
+import { Carousel, Flex, Grid } from 'antd-mobile';
 import axios from 'axios'
-import './index.css'
+import './index.scss'
+
+import Search from './search'
 
 import nav1 from '../../assets/images/nav-1.png'
 import nav2 from '../../assets/images/nav-2.png'
 import nav3 from '../../assets/images/nav-3.png'
 import nav4 from '../../assets/images/nav-4.png'
 
+const swipersData = [
+  {id: 1, imgSrc: 'https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png'}, 
+  {id: 2, imgSrc: 'https://zos.alipayobjects.com/rmsportal/TekJlZRVCjLFexlOCuWn.png'}, 
+  {id: 3, imgSrc: 'https://zos.alipayobjects.com/rmsportal/IJOtIlfsYdTyaDTRVrLI.png'}, 
+]
+
+const groudsData = Array.from(new Array(4)).map((item, i) => ({
+  id: i,
+  title: `names${i}`,
+  desc: `desc${i}`,
+  imgSrc: `https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png`,
+}))
+
+
+const newsData = Array.from(new Array(6)).map((item, i) => ({
+  id: i,
+  title: `置业选择 ｜ 安贞西里 三室两厅 河间的古雅别院`,
+  label: '新华网',
+  time: new Date().getTime(),
+  imgSrc: `https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png`,
+}))
+
 export default function Index() {
   const navigate = useNavigate();
 
-  const [swipers, setSwipers] = useState([
-    {id: 1, imageSrc: 'https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png'}, 
-    {id: 2, imageSrc: 'https://zos.alipayobjects.com/rmsportal/TekJlZRVCjLFexlOCuWn.png'}, 
-    {id: 3, imageSrc: 'https://zos.alipayobjects.com/rmsportal/IJOtIlfsYdTyaDTRVrLI.png'}, 
-  ])
+  //////////// 轮播图 ////////////
+
+  const [swipers, setSwipers] = useState(swipersData)
 
   // 获取轮播图数据
   const getSwipers = async () => {
@@ -37,7 +59,7 @@ export default function Index() {
         style={{ display: 'inline-block', width: '100%', height: 202 }}
       >
         <img
-          src={item.imageSrc}
+          src={item.imgSrc}
           alt=""
           style={{ width: '100%', verticalAlign: 'top' }}
         />
@@ -45,30 +67,32 @@ export default function Index() {
     ))
   }
 
+  //////////// 菜单导航 ////////////
+
   const navs = [
     {
       id: 1,
       title: '整租',
-      imageSrc: nav1,
-      path: '',
+      imgSrc: nav1,
+      path: '/home/findhouse',
     },
     {
       id: 2,
       title: '合租',
-      imageSrc: nav2,
-      path: '',
+      imgSrc: nav2,
+      path: '/home/findhouse',
     },
     {
       id: 3,
       title: '地图找房',
-      imageSrc: nav3,
-      path: '',
+      imgSrc: nav3,
+      path: '/home/findhouse',
     },
     {
       id: 4,
       title: '去出租',
-      imageSrc: nav4,
-      path: '',
+      imgSrc: nav4,
+      path: '/home/findhouse',
     }
   ]
 
@@ -78,30 +102,105 @@ export default function Index() {
 
   const renderNavs = () => {
     return navs.map(item => (
-      <Flex.Item key={item.id} onClick={handleNav}>
-          <img src={item.imageSrc} />
+      <Flex.Item key={item.id} onClick={() => handleNav(item.path)}>
+          <img src={item.imgSrc} />
           <h2>{item.title}</h2>
         </Flex.Item>
     ))
   }
 
+  /////////////// 租房小组 /////////////////
+
+  const [grouds, setGrouds] = useState(groudsData)
+  const getGrouds = async () => {
+    const res = await axios.get('http://localhost:8080/home/grouds', {
+      params: {
+        area: ''
+      }
+    })
+    setGrouds(res.data.body)
+  }
+  useEffect(() => {
+    // getGrouds()
+  }, [])
+
+  /////////// 最新资讯 /////////////////
+
+  const [news, setNews] = useState(newsData)
+  const getNews = async () => {
+    const res = await axios.get('http://localhost:8080/home/grouds', {
+      params: {
+        area: ''
+      }
+    })
+    setNews(res.data.body)
+  }
+
+  useEffect(() => {
+    // getNews()
+  }, [])
+
+  const renderNews = () => {
+    return news.map(item => (
+      <Flex className='news-item' direction='row' justify='around' align='start' >
+        <img src={item.imgSrc} />
+        <Flex direction='column' justify='between' className='new-item-right'>
+          <h3 className='font-size-14'>{item.title}</h3>
+          <Flex direction="row" justify='between' className='new-item-bottom'>
+            <div className='font-size-12 color-info'>{item.label}</div>
+            <div className='font-size-12 color-info'>{item.time}</div>
+          </Flex>
+        </Flex>
+      </Flex>
+    ))
+  }
+
   return (
     <div>
+      
       {/* 轮播图 */}
-      <Carousel
-        autoplay={false}
-        infinite
-        beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-        afterChange={index => console.log('slide to', index)}
-      >
-        {renderSwipers()}
-      </Carousel>
+      <div className="swiper">
+        <Carousel
+          autoplay={true}
+          infinite
+        >
+          {renderSwipers()}
+        </Carousel>
+        {/* 搜索栏 */}
+        <Search></Search>
+      </div>
 
+      
+      
       {/* 导航菜单 */}
       <Flex className="nav">
         {renderNavs()}
       </Flex>  
+
+      {/* 租房小组 */}
+      <div className="group">
+        <h3 className="group-title">租房小组 <span className="more">更多</span></h3>
+        <Grid 
+          data={grouds} 
+          columnNum={2} 
+          square={false}
+          hasLine={false}
+          renderItem={(item) => (
+            <Flex key={item.id} className='group-item' justify='around'>
+              <div className='desc'>
+                  <p className="title">{item.title}</p>
+                  <span className='info'>{item.desc}</span>
+              </div>
+              <img src={item.imgSrc} alt=""/>
+            </Flex>
+          )}></Grid>
+      </div>
+
+      {/* 最新资讯 */}
+      <div className='news'>
+        <h3 className='news-title'>最新资讯</h3>
+        {renderNews()}
+      </div>
     </div>
-      
-    );
+  );
 }

@@ -118,8 +118,57 @@ import 'antd-mobile/dist/antd-mobile.css'
 - 在组件中导入axios
 - 在state中添加轮播图数据：swipers
 - 新建getSwipers方法获取轮播图数据，更新swipers状态
-- 在UseEffect中调用getSwipers
+- 在UseEffect中调用getSwipers   
 - 使用获取到的数据渲染轮播图
 
-导航菜单
+#### 导航菜单
 - 使用antd-mobile的flex组件布局
+- 跳转路由
+
+#### 资讯
+- 结构和样式 Flex
+- 跳转路由
+#### 搜索栏
+- 结构和样式
+- 添加位置/找房子/地图的路由
+
+#### h5 中的地理位置api
+https://developer.mozilla.org/zh-CN/docs/Web/API/Geolocation_API
+
+- longitude 经度
+- latitude 纬度
+- altitude 海拔高度
+- heading 行经中的方向
+
+``` js
+navigator.geolocation.getCurrentPosition(function(position) {
+  do_something(position.coords.latitude, position.coords.longitude);
+});
+```
+
+获取到的地理位置跟GPS ip地址 wifi 蓝牙的MAC地址 GSM/CDMS的ID有关
+手机优先使用GPS定位， 笔记本最准确的定位是wifi
+
+#### 百度地图 api
+https://lbsyun.baidu.com/index.php?title=jspopularGL
+
+申请百度账号和密钥
+
+1. 引入百度地图api, 设置ak
+2. 设置样式
+3. 配置组件路由，新增地图组件
+4. 初始化地图实例，指定中心，初始化地图
+
+获取顶部导航城市信息  
+1. 打开百度地图JS API定位文档
+2. 通过ip定位获取当前城市名称
+3. 调用服务，获取项目中城市的信息，如没有返回默认城市名称和id
+4. 将信息展示在顶部导航栏中
+
+``` js
+const localCity = new window.BMap.localCity()
+localCity.get(res = > {
+  
+})
+```
+

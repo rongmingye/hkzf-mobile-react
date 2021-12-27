@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Route, Routes, useNavigate, useLocation, Outlet } from "react-router-dom"
 import { TabBar } from 'antd-mobile'
 import {
@@ -47,6 +47,14 @@ export default function Home(props) {
     setActiveKey(item.path)
   }
 
+  // 路由切换触发页面渲染
+  useEffect(() => {
+    if (location.pathname !== activeKey) {
+      // 同步tabar高亮
+      setActiveKey(location.pathname)
+    }
+  })
+
   const renderTarbarItem = () => {
     return tabs.map(item => 
       <TabBar.Item 
@@ -62,9 +70,6 @@ export default function Home(props) {
   return <div className="home">
     {/* 渲染子路由 */}
     <Outlet />
-    <Routes>
-     
-    </Routes>
     {/* tabbar */}
     <TabBar barTintColor="#fff" tintColor={activeColor} noRenderContent={true} onChange={setActiveKey}>
       {renderTarbarItem()}
