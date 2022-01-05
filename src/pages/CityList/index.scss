@@ -1,18 +1,6 @@
 @import '/src/assets/css/color';
 
 .cityList {
-  width: 100vw;
-  height: 100vh;
-  padding-top: 45px;
-
-  .am-navbar {
-    margin-top: -45px;
-  }
-
-  .am-navbar-light .am-navbar-title {
-    color: $color_black;
-  }
-
   .city {
     line-height: 30px;
     padding: 0 10px;

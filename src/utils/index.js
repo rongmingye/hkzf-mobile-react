@@ -1,5 +1,9 @@
 import axios from '../api/axios'
 
+/**
+ * 获取当前定位城市
+ * @returns 
+ */
 export async function getCurrentCity() {
   let localCity = localStorage.localCity ? JSON.parse(localStorage.localCity) : '';
 

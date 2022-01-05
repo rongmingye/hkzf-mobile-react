@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Carousel, Flex, Grid } from 'antd-mobile';
 import axios from 'axios'
+import { BASE_URL } from '../../utils/url'
 import './index.scss'
 
 import Search from './search'
@@ -11,43 +12,21 @@ import nav2 from '../../assets/images/nav-2.png'
 import nav3 from '../../assets/images/nav-3.png'
 import nav4 from '../../assets/images/nav-4.png'
 
-const swipersData = [
-  {id: 1, imgSrc: 'https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png'}, 
-  {id: 2, imgSrc: 'https://zos.alipayobjects.com/rmsportal/TekJlZRVCjLFexlOCuWn.png'}, 
-  {id: 3, imgSrc: 'https://zos.alipayobjects.com/rmsportal/IJOtIlfsYdTyaDTRVrLI.png'}, 
-]
-
-const groudsData = Array.from(new Array(4)).map((item, i) => ({
-  id: i,
-  title: `names${i}`,
-  desc: `desc${i}`,
-  imgSrc: `https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png`,
-}))
-
-
-const newsData = Array.from(new Array(6)).map((item, i) => ({
-  id: i,
-  title: `置业选择 ｜ 安贞西里 三室两厅 河间的古雅别院`,
-  label: '新华网',
-  time: new Date().getTime(),
-  imgSrc: `https://zos.alipayobjects.com/rmsportal/AiyWuByWklrrUDlFignR.png`,
-}))
-
 export default function Index() {
   const navigate = useNavigate();
 
   //////////// 轮播图 ////////////
 
-  const [swipers, setSwipers] = useState(swipersData)
+  const [swipers, setSwipers] = useState([])
 
   // 获取轮播图数据
   const getSwipers = async () => {
     const res = await axios.get('http://localhost:8080/home/swiper')
-    setSwipers(res.data)
+    setSwipers(res.data.body)
   }
 
   useEffect(() => {
-    // getSwipers()
+    getSwipers()
   }, []) 
 
   // 渲染轮播图结构
@@ -59,7 +38,7 @@ export default function Index() {
         style={{ display: 'inline-block', width: '100%', height: 202 }}
       >
         <img
-          src={item.imgSrc}
+          src={BASE_URL + item.imgSrc}
           alt=""
           style={{ width: '100%', verticalAlign: 'top' }}
         />
@@ -111,39 +90,39 @@ export default function Index() {
 
   /////////////// 租房小组 /////////////////
 
-  const [grouds, setGrouds] = useState(groudsData)
+  const [grouds, setGrouds] = useState([])
   const getGrouds = async () => {
-    const res = await axios.get('http://localhost:8080/home/grouds', {
+    const res = await axios.get('http://localhost:8080/home/groups', {
       params: {
-        area: ''
+        area: 'AREA%7C88cff55c-aaa4-e2e0'
       }
     })
     setGrouds(res.data.body)
   }
   useEffect(() => {
-    // getGrouds()
+    getGrouds()
   }, [])
 
   /////////// 最新资讯 /////////////////
 
-  const [news, setNews] = useState(newsData)
+  const [news, setNews] = useState([])
   const getNews = async () => {
-    const res = await axios.get('http://localhost:8080/home/grouds', {
+    const res = await axios.get('http://localhost:8080/home/news', {
       params: {
-        area: ''
+        area: 'AREA%7C88cff55c-aaa4-e2e0'
       }
     })
     setNews(res.data.body)
   }
 
   useEffect(() => {
-    // getNews()
+    getNews()
   }, [])
 
   const renderNews = () => {
     return news.map(item => (
       <Flex className='news-item' direction='row' justify='around' align='start' >
-        <img src={item.imgSrc} />
+        <img src={BASE_URL +item.imgSrc} />
         <Flex direction='column' justify='between' className='new-item-right'>
           <h3 className='font-size-14'>{item.title}</h3>
           <Flex direction="row" justify='between' className='new-item-bottom'>
@@ -169,8 +148,6 @@ export default function Index() {
         {/* 搜索栏 */}
         <Search></Search>
       </div>
-
-      
       
       {/* 导航菜单 */}
       <Flex className="nav">
@@ -191,7 +168,7 @@ export default function Index() {
                   <p className="title">{item.title}</p>
                   <span className='info'>{item.desc}</span>
               </div>
-              <img src={item.imgSrc} alt=""/>
+              <img src={BASE_URL + item.imgSrc} alt=""/>
             </Flex>
           )}></Grid>
       </div>

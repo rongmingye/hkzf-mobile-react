@@ -41,6 +41,7 @@
     "antd-mobile-icons": "^0.2.2",
     "axios": "^0.24.0",
     "node-sass": "^7.0.0",
+    "prop-types": "^15.8.0",
     "react-router-dom": "^6.1.1",
     "react-virtualized": "^9.22.3",
     "sass": "^1.45.1",

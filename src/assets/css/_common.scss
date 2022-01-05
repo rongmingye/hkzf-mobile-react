@@ -1,0 +1,18 @@
+.page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.nav-page {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 45px;
+  .am-navbar {
+    margin-top: -45px;
+  }
+  .page-content {
+    width: 100vw;
+    height: calc(100vh - 45px);
+    overflow: auto;
+  }
+}

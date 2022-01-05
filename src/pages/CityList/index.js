@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { NavBar } from 'antd-mobile'
+import { Toast } from 'antd-mobile'
 import { List, AutoSizer } from 'react-virtualized'
 import { getCurrentCity } from '../../utils'
+import NavHeader from '../../components/NavHeader'
+
 import './index.scss'
 
 // 格式化城市数据
@@ -39,23 +41,17 @@ const formartCityIndex = (letter) => {
 
 export default function CityList() {
 
-  
   // 长列表性能优化
   // 大型列表和表格数据， 如城市列表，通讯录，微博等
   // 大量dom节点的重排和重绘
   // 懒渲染：每次只加载一部分数据(如10条)，但依然存在大量dom节点
   // 可视区域渲染(react-virtualized)：只渲染可视区域，且预加载可视外一点区域避免白屏，不可视区域不渲染。场景：一次性展示大量数据，如：大表格，微博，聊天应用。
 
-
   const navigate = useNavigate()
   let [cityList, setCityList] = useState({})
   let [cityIndex, setCityIndex] = useState([])
   const [activeIndex, setActiveIndex] = useState(0)
   const cityListRef = useRef(null)
-
-  const handleLeft = () => {
-    navigate('/home')
-  }
 
   useEffect(async () => {
     // 获取城市列表数据
@@ -99,8 +95,8 @@ export default function CityList() {
     return (
       <div key={key} className='city' style={style}>
         <div className='title'>{ formartCityIndex(letter)}</div>
-       {letterCityList.map((item, index) => {
-          return <div key={item.value} className='name' onClick={selectCity(item)}>{item.label}</div>
+       {letterCityList.map((item) => {
+          return <div key={item.value} className='name' onClick={() => changeCity(item)}>{item.label}</div>
        })}
       </div>
     );
@@ -114,15 +110,21 @@ export default function CityList() {
   }
 
   // 选择城市
-  const selectCity = (city) => {
-  
+  const HOUSE_CITY = ['北京', '上海', '广州', '深圳'] // 有房源城市
+  const changeCity = ({label, value}) => {
+    if(HOUSE_CITY.indexOf(label) > -1) {
+      localStorage.setItem('localCity', JSON.stringify({label, value}))
+      navigate('/home')
+    } else {
+      Toast.info('该城市暂无房源信息', 1, null, false);
+    }
   }
 
-  const selectCityIndex = (index) => {
-    // scrollToRow 滚动到指定行
-    // scrollToAlignment 滚动位置
-    // mwasureAllRows 提前计算所有行
-    cityListRef.current.scrollToRow(index)
+   // 监听可视区域的渲染信息
+   const onRowsRendered = ({startIndex}) =>{
+    if (startIndex !== activeIndex) {
+      setActiveIndex(startIndex)
+    }
   }
 
   // 渲染右侧索引列表
@@ -136,21 +138,18 @@ export default function CityList() {
     })
   }
 
-  // 监听可视区域的渲染信息
-  const onRowsRendered = ({startIndex}) =>{
-    if (startIndex !== activeIndex) {
-      setActiveIndex(startIndex)
-    }
+   // 选择右侧字母
+   const selectCityIndex = (index) => {
+    // scrollToRow 滚动到指定行
+    // scrollToAlignment 滚动位置
+    // mwasureAllRows 提前计算所有行
+    cityListRef.current.scrollToRow(index)
   }
 
   return ( 
-    <div className='cityList'> 
-       <NavBar 
-          className='bg-nav'
-          mode="light"
-          icon={<i className='iconfont icon-back color-info'/>}
-          onLeftClick={() => handleLeft()}
-        >城市选择</NavBar>
+    <div className='cityList nav-page'> 
+      <NavHeader onLeftClick={()=>navigate('/home')}>地图找房</NavHeader>
+      <div className='page-content'>
         <AutoSizer>
           {({width, height}) => 
             <List
@@ -167,6 +166,7 @@ export default function CityList() {
         </AutoSizer>
         {/* 右侧索引列表 */}
         <ul className='city-index'>{renderCityIndex()}</ul>
+      </div>
     </div>
   )
 }
