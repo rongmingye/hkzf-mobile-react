@@ -121,13 +121,13 @@ export default function Index() {
 
   const renderNews = () => {
     return news.map(item => (
-      <Flex className='news-item' direction='row' justify='around' align='start' >
+      <Flex key={item.id} className='news-item' direction='row' justify='around' align='start' >
         <img src={BASE_URL +item.imgSrc} />
         <Flex direction='column' justify='between' className='new-item-right'>
           <h3 className='font-size-14'>{item.title}</h3>
           <Flex direction="row" justify='between' className='new-item-bottom'>
-            <div className='font-size-12 color-info'>{item.label}</div>
-            <div className='font-size-12 color-info'>{item.time}</div>
+            <div className='font-size-12 color-info'>{item.from}</div>
+            <div className='font-size-12 color-info'>{item.date}</div>
           </Flex>
         </Flex>
       </Flex>

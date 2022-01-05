@@ -1,7 +1,7 @@
-import axios from '../api/axios'
+import Api from '../utils/api'
 
 /**
- * 获取当前定位城市
+ * 获取当前定位城市s
  * @returns 
  */
 export async function getCurrentCity() {
@@ -14,7 +14,7 @@ export async function getCurrentCity() {
       return new Promise((resolve, reject) => {
         try {
           localCity.get(async res => {
-            const result = await axios.get(`http://localhost:8080/area/info?name=${res.name}`)
+            const result = await Api.get(`http://localhost:8080/area/info?name=${res.name}`)
             localStorage.setItem('localCity', JSON.stringify(result.data.body))
             resolve(result.data.body)
           })
