@@ -37,7 +37,7 @@
 
 
 初始化项目
-- 初始化项目 npx create-react-app hkzf-mobile
+- 初始化项目 npx create-react-app hkzf-mobile-react
 - 启动项目 npm start
 - 跳转项目中的src目录结构
 
@@ -174,7 +174,6 @@ localCity.get(res = > {
   
 })
 ```
-
 
 #### 总结
 1. 项目准备：部署本地接口，脚手架初始化项目，antd-mobile, 路由。

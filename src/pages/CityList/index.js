@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
+import api from '../../api'
 import { useNavigate } from 'react-router-dom'
 import { Toast } from 'antd-mobile'
 import { List, AutoSizer } from 'react-virtualized'
@@ -51,6 +51,7 @@ export default function CityList() {
   let [cityList, setCityList] = useState({})
   let [cityIndex, setCityIndex] = useState([])
   const [activeIndex, setActiveIndex] = useState(0)
+  
   const cityListRef = useRef(null)
 
   useEffect(async () => {
@@ -63,12 +64,12 @@ export default function CityList() {
   // 获取城市数据
   const getCityList = async () => {
     // 普通城市
-    const res = await axios.get('http://localhost:8080/area/city?level=1')
-    let {cityList, cityIndex} = formatData(res.data.body || [])
+    const res = await api.getCity({level: 1})
+    let {cityList, cityIndex} = formatData(res.body || [])
 
     // 获取热门城市
-    const hotRes = await axios.get('http://localhost:8080/area/hot')
-    cityList['hot'] = hotRes.data.body
+    const hotRes = await api.getHotCity()
+    cityList['hot'] = hotRes.body
     cityIndex = ['hot', ...cityIndex] 
     console.log('cityList', cityList);
 

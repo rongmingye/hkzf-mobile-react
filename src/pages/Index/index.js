@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Carousel, Flex, Grid } from 'antd-mobile';
-import axios from 'axios'
-import { BASE_URL } from '../../utils/url'
+import api from '../../api'
+import { BASE_URL } from '../../config/config'
 import './index.scss'
 
 import Search from './search'
@@ -21,8 +21,8 @@ export default function Index() {
 
   // 获取轮播图数据
   const getSwipers = async () => {
-    const res = await axios.get('http://localhost:8080/home/swiper')
-    setSwipers(res.data.body)
+    const res = await api.getHomeSwiper()
+    setSwipers(res.body)
   }
 
   useEffect(() => {
@@ -92,12 +92,8 @@ export default function Index() {
 
   const [grouds, setGrouds] = useState([])
   const getGrouds = async () => {
-    const res = await axios.get('http://localhost:8080/home/groups', {
-      params: {
-        area: 'AREA%7C88cff55c-aaa4-e2e0'
-      }
-    })
-    setGrouds(res.data.body)
+    const res = await api.getHomeGroups({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
+    setGrouds(res.body)
   }
   useEffect(() => {
     getGrouds()
@@ -107,12 +103,8 @@ export default function Index() {
 
   const [news, setNews] = useState([])
   const getNews = async () => {
-    const res = await axios.get('http://localhost:8080/home/news', {
-      params: {
-        area: 'AREA%7C88cff55c-aaa4-e2e0'
-      }
-    })
-    setNews(res.data.body)
+    const res = await api.getHomeNews({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
+    setNews(res.body)
   }
 
   useEffect(() => {

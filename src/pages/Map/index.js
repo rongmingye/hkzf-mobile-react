@@ -1,10 +1,10 @@
-import axios from 'axios'
+import api from '../../api'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import NavHeader from '../../components/NavHeader'
 import { getCurrentCity } from '../../utils'
 import HouseItem from '../../components/HouseItem'
-import { BASE_URL } from '../../utils/url'
+import { BASE_URL } from '../../config/config'
 
 import './index.scss'
 import { Toast } from 'antd-mobile'
@@ -64,10 +64,10 @@ export default function Map() {
   const renderOverlays = async (id) => {
     try {
       Toast.loading('加载中...', 0, null, false)
-      const res = await axios.get(`http://localhost:8080/area/map?id=${id}`)
+      const res = await api.getAreaMap(id)
       Toast.hide()
       const { nextZoom, type } = getTypeAndZoom()
-      res.data.body.forEach(item => {
+      res.body.forEach(item => {
         const label = createOverlays(item, nextZoom, type)
         map.addOverlay(label)
       })
@@ -146,9 +146,9 @@ export default function Map() {
   const getHousesList = async (id) => {
     try {
       Toast.loading('加载中...', 0, null, false)
-      const res = await axios.get(`http://localhost:8080/houses?cityId=${id}`) 
+      const res = await api.getHouses(id) 
       Toast.hide()
-      setHouseList(res.data.body.list)
+      setHouseList(res.body.list)
       setIsShowList(true)
     } catch (error) {
       Toast.hide()
