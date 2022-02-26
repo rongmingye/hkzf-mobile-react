@@ -15,8 +15,8 @@ export async function getCurrentCity() {
         try {
           localCity.get(async res => {
             const result = await api.getAreaInfo(res.name)
-            localStorage.setItem('localCity', JSON.stringify(result.data.body))
-            resolve(result.data.body)
+            localStorage.setItem('localCity', JSON.stringify(result.body))
+            resolve(result.body)
           })
         } catch (error) {
           reject(error)

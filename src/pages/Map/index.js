@@ -67,7 +67,7 @@ export default function Map() {
       const res = await api.getAreaMap(id)
       Toast.hide()
       const { nextZoom, type } = getTypeAndZoom()
-      res.data.body.forEach(item => {
+      res.body.forEach(item => {
         const label = createOverlays(item, nextZoom, type)
         map.addOverlay(label)
       })
@@ -148,7 +148,7 @@ export default function Map() {
       Toast.loading('加载中...', 0, null, false)
       const res = await api.getHouses(id) 
       Toast.hide()
-      setHouseList(res.data.body.list)
+      setHouseList(res.body.list)
       setIsShowList(true)
     } catch (error) {
       Toast.hide()

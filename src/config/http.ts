@@ -1,11 +1,10 @@
 import axios from 'axios'
-import { baseHeader } from '../header'
+import { baseHeader } from './header'
 
 const http = axios.create(baseHeader)
 
 // 添加请求拦截器
 http.interceptors.request.use(config => {
-  config.headers['x-auth-token'] = ''
   return config
 })
 

@@ -22,7 +22,7 @@ export default function Index() {
   // 获取轮播图数据
   const getSwipers = async () => {
     const res = await api.getHomeSwiper()
-    setSwipers(res.data.body)
+    setSwipers(res.body)
   }
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function Index() {
   const [grouds, setGrouds] = useState([])
   const getGrouds = async () => {
     const res = await api.getHomeGroups({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
-    setGrouds(res.data.body)
+    setGrouds(res.body)
   }
   useEffect(() => {
     getGrouds()
@@ -104,7 +104,7 @@ export default function Index() {
   const [news, setNews] = useState([])
   const getNews = async () => {
     const res = await api.getHomeNews({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
-    setNews(res.data.body)
+    setNews(res.body)
   }
 
   useEffect(() => {

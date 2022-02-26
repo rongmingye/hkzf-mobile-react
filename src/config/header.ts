@@ -1,5 +1,5 @@
-import { BASE_URL } from './config.ts'
+import { BASE_URL } from './config'
 
 export let baseHeader = {
-  baseUrl: BASE_URL
+  baseURL: BASE_URL
 }

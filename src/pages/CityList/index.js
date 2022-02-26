@@ -65,11 +65,11 @@ export default function CityList() {
   const getCityList = async () => {
     // 普通城市
     const res = await api.getCity({level: 1})
-    let {cityList, cityIndex} = formatData(res.data.body || [])
+    let {cityList, cityIndex} = formatData(res.body || [])
 
     // 获取热门城市
     const hotRes = await api.getHotCity()
-    cityList['hot'] = hotRes.data.body
+    cityList['hot'] = hotRes.body
     cityIndex = ['hot', ...cityIndex] 
     console.log('cityList', cityList);
 

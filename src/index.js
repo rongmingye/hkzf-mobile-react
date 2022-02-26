@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from './api/axios'
+import axios from './api'
 import 'react-virtualized/styles.css';
 import './assets/fonts/iconfont.css'
 import 'antd-mobile/dist/antd-mobile.css';
@@ -9,7 +9,7 @@ import './index.scss';
 // app样式在组件库样式后面
 import App from './App';
   
-window.axios = axios
+window.api = axios
 
 ReactDOM.render(
   <React.StrictMode>
