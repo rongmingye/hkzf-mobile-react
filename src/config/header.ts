@@ -1,5 +1,9 @@
 import { BASE_URL } from './config'
 
-export let baseHeader = {
+interface IBaseHeader {
+  baseURL: string | undefined
+}
+
+export let baseHeader: IBaseHeader = {
   baseURL: BASE_URL
 }

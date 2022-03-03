@@ -10,7 +10,7 @@ http.interceptors.request.use(config => {
 
 // 添加响应拦截器
 http.interceptors.response.use(
-  response => {
+  (response: AxiosResponse) => {
     const res = response.data
     const code = res.status
     if (code) {

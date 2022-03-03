@@ -4,7 +4,12 @@ import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styles from './index.module.css'
 
-function NavHeader(props) {
+interface NavBarProps {
+  onLeftClick(): any,
+  children: string,
+}
+
+function NavHeader(props: NavBarProps) {
   const navigate = useNavigate()
 
   // 默认操作

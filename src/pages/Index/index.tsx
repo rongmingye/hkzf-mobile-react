@@ -21,7 +21,7 @@ export default function Index() {
 
   // 获取轮播图数据
   const getSwipers = async () => {
-    const res = await api.getHomeSwiper()
+    const res = await api.getHomeSwiper<ISwiperItem[]>()
     setSwipers(res.body)
   }
 
@@ -31,7 +31,7 @@ export default function Index() {
 
   // 渲染轮播图结构
   const renderSwipers = () => {
-    return swipers.map(item => (
+    return swipers.map((item: ISwiperItem) => (
       <a
         key={item.id}
         href="http://www.alipay.com"
@@ -80,7 +80,7 @@ export default function Index() {
   }
 
   const renderNavs = () => {
-    return navs.map(item => (
+    return navs.map((item: INavItem) => (
       <Flex.Item key={item.id} onClick={() => handleNav(item.path)}>
           <img src={item.imgSrc} />
           <h2>{item.title}</h2>
@@ -92,7 +92,7 @@ export default function Index() {
 
   const [grouds, setGrouds] = useState([])
   const getGrouds = async () => {
-    const res = await api.getHomeGroups({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
+    const res = await api.getHomeGroups<IGroudItem[]>({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
     setGrouds(res.body)
   }
   useEffect(() => {
@@ -103,7 +103,7 @@ export default function Index() {
 
   const [news, setNews] = useState([])
   const getNews = async () => {
-    const res = await api.getHomeNews({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
+    const res = await api.getHomeNews<INewItem[]>({ area: 'AREA%7C88cff55c-aaa4-e2e0'})
     setNews(res.body)
   }
 
@@ -112,7 +112,7 @@ export default function Index() {
   }, [])
 
   const renderNews = () => {
-    return news.map(item => (
+    return news.map((item: INewItem) => (
       <Flex className='news-item' direction='row' justify='around' align='start' >
         <img src={BASE_URL +item.imgSrc} />
         <Flex direction='column' justify='between' className='new-item-right'>
@@ -154,7 +154,7 @@ export default function Index() {
           columnNum={2} 
           square={false}
           hasLine={false}
-          renderItem={(item) => (
+          renderItem={(item: IGroudItem) => (
             <Flex key={item.id} className='group-item' justify='around'>
               <div className='desc'>
                   <p className="title">{item.title}</p>

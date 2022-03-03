@@ -8,7 +8,7 @@ export default {
   getHotCity() {
     return http.get(`area/hot`)
   },
-  getAreaMap(id) {
+  getAreaMap(id: string | number) {
     return http.get(`area/map?id=${id}`)
   },
   getAreaInfo(name: string) {
