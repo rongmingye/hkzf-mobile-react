@@ -31,7 +31,7 @@ const formatData = (lists) => {
   }
 }
 
-const formartCityIndex = (letter) => {
+const formartCityIndex = (letter: string): string => {
   switch (letter) {
     case '#': return '当前定位'
     case 'hot': return '热门城市'
@@ -49,38 +49,38 @@ export default function CityList() {
 
   const navigate = useNavigate()
   let [cityList, setCityList] = useState({})
-  let [cityIndex, setCityIndex] = useState([])
+  let [cityIndex, setCityIndex] = useState<string[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
   
-  const cityListRef = useRef(null)
+  const cityListRef = useRef<List>(null)
 
-  useEffect(async () => {
+  useEffect(() => {
     // 获取城市列表数据
-    await getCityList()
-    // 注意：List组件要有数据之后执行
-    cityListRef.current.mwasureAllRows()
+    getCityList()
+    
   }, [])
 
   // 获取城市数据
   const getCityList = async () => {
     // 普通城市
-    const res = await api.getCity({level: 1})
+    const res = await api.getCity<ICityItem>({level: 1})
     let {cityList, cityIndex} = formatData(res.body || [])
 
     // 获取热门城市
     const hotRes = await api.getHotCity()
     cityList['hot'] = hotRes.body
     cityIndex = ['hot', ...cityIndex] 
-    console.log('cityList', cityList);
 
     // 获取当前定位城市
     const localCity = await getCurrentCity()
     cityList['#'] = [localCity]
-    cityIndex = ['#', ...cityIndex] 
 
     setCityList(cityList)
     setCityIndex(cityIndex)
     console.log(cityList, cityIndex)
+
+    // 注意：List组件要有数据之后执行
+    cityListRef.current.measureAllRows()
   }
 
   // 渲染行内容
@@ -92,11 +92,11 @@ export default function CityList() {
     style, // Style object to be applied to row (to position it)
   }) => {
     const letter = cityIndex[index]
-    const letterCityList = cityList[letter] || []
+    const letterCityList: ICityItem[] = cityList[letter] || []
     return (
       <div key={key} className='city' style={style}>
         <div className='title'>{ formartCityIndex(letter)}</div>
-       {letterCityList.map((item) => {
+       {letterCityList.map((item: ICityItem) => {
           return <div key={item.value} className='name' onClick={() => changeCity(item)}>{item.label}</div>
        })}
       </div>
@@ -106,7 +106,7 @@ export default function CityList() {
   // 计算行高度
   const getRowHeight = ({index}) => {
     const letter = cityIndex[index]
-    const letterCityList = cityList[letter] || []
+    const letterCityList: ICityItem[] = cityList[letter] || []
     return letterCityList.length * 30 + 40
   }
 
@@ -117,7 +117,7 @@ export default function CityList() {
       localStorage.setItem('localCity', JSON.stringify({label, value}))
       navigate('/home')
     } else {
-      Toast.info('该城市暂无房源信息', 1, null, false);
+      Toast.info('该城市暂无房源信息', 1, undefined, false);
     }
   }
 
@@ -130,7 +130,7 @@ export default function CityList() {
 
   // 渲染右侧索引列表
   const renderCityIndex = () => {
-    return cityIndex.map((item, index) => {
+    return cityIndex.map((item: string, index: number) => {
       return <div key={item} className='city-index-item' onClick={() => selectCityIndex(index)}>
         <span className={activeIndex === index ? 'index-active' : ''}>
           {item === 'hot' ? '热' : item.toUpperCase()}
@@ -143,7 +143,7 @@ export default function CityList() {
    const selectCityIndex = (index) => {
     // scrollToRow 滚动到指定行
     // scrollToAlignment 滚动位置
-    // mwasureAllRows 提前计算所有行
+    // measureAllRows 提前计算所有行
     cityListRef.current.scrollToRow(index)
   }
 

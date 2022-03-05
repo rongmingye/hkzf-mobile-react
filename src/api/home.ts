@@ -8,6 +8,6 @@ export default {
     return http.get<T>(`home/groups`, {params})
   },
   getHomeNews<T>(params: HomeNewsParams) {
-    return http.get<TemplateStringsArray>(`home/news`, {params})
+    return http.get<T>(`home/news`, {params})
   }
 } 

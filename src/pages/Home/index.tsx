@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Route, Routes, useNavigate, useLocation, Outlet } from "react-router-dom"
 import { TabBar } from 'antd-mobile'
 import {
@@ -56,7 +56,7 @@ export default function Home(props) {
   })
 
   const renderTarbarItem = () => {
-    return tabs.map(item => 
+    return tabs.map((item: ITabItem) => 
       <TabBar.Item 
         key={item.path} 
         icon={item.icon} 
@@ -71,7 +71,7 @@ export default function Home(props) {
     {/* 渲染子路由 */}
     <Outlet />
     {/* tabbar */}
-    <TabBar barTintColor="#fff" tintColor={activeColor} noRenderContent={true} onChange={setActiveKey}>
+    <TabBar barTintColor="#fff" tintColor={activeColor} noRenderContent={true}>
       {renderTarbarItem()}
     </TabBar>
   </div>

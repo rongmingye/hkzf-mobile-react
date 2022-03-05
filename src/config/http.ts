@@ -1,11 +1,12 @@
-import axios from 'axios'
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import { baseHeader } from './header'
+import { showMessage, handleResponseCode } from './status'
 
-const http = axios.create(baseHeader)
+const http: AxiosInstance = axios.create(baseHeader)
 
 // 添加请求拦截器
-http.interceptors.request.use(config => {
-  return config
+http.interceptors.request.use((request: AxiosRequestConfig) => {
+  return request 
 })
 
 // 添加响应拦截器
@@ -13,22 +14,22 @@ http.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data
     const code = res.status
+    if (response.status !== 200) {
+      showMessage(response.status)
+      handleResponseCode(response.status)
+    } 
     if (code) {
-      switch (code) {
-        case 401:
-          // 认证失败，请重新登录！
-          break;
+      if (code !== 200) {
+        showMessage(code)
+        handleResponseCode(code)
       }
     }
     return res;
   },
   error => {
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-          break
-      }
-    }
+    const code = error.response.status
+    showMessage(code)
+    handleResponseCode(code)
     return Promise.reject(error)
   });
 

@@ -22,7 +22,7 @@ const labelStyle = {
 
 export default function Map() {
 
-  let map = ''
+  let map: any = ''
   const navigate = useNavigate()
   const [houseList, setHouseList] = useState([])
   const [isShowList, setIsShowList] = useState(false)
@@ -63,7 +63,7 @@ export default function Map() {
   // 2 获取房源类型以及缩放级别
   const renderOverlays = async (id) => {
     try {
-      Toast.loading('加载中...', 0, null, false)
+      Toast.loading('加载中...', 0, undefined, false)
       const res = await api.getAreaMap(id)
       Toast.hide()
       const { nextZoom, type } = getTypeAndZoom()
@@ -145,7 +145,7 @@ export default function Map() {
   // 获取小区房源数据
   const getHousesList = async (id) => {
     try {
-      Toast.loading('加载中...', 0, null, false)
+      Toast.loading('加载中...', 0, undefined, false)
       const res = await api.getHouses(id) 
       Toast.hide()
       setHouseList(res.body.list)
@@ -192,7 +192,7 @@ export default function Map() {
 
   // 封装渲染房屋列表的方法
   const renderHousesList = () => {
-    return houseList.map(item => (
+    return houseList.map((item:IHouseItem) => (
       <HouseItem
         onClick={() => navigate(`/detail/${item.houseCode}`)}
         key={item.houseCode}

@@ -113,7 +113,7 @@ export default function Index() {
 
   const renderNews = () => {
     return news.map((item: INewItem) => (
-      <Flex className='news-item' direction='row' justify='around' align='start' >
+      <Flex key={item.id} className='news-item' direction='row' justify='around' align='start' >
         <img src={BASE_URL +item.imgSrc} />
         <Flex direction='column' justify='between' className='new-item-right'>
           <h3 className='font-size-14'>{item.title}</h3>
@@ -153,14 +153,14 @@ export default function Index() {
           data={grouds} 
           columnNum={2} 
           square={false}
-          hasLine={false}
-          renderItem={(item: IGroudItem) => (
-            <Flex key={item.id} className='group-item' justify='around'>
+          hasLine={false}  
+          renderItem={(dataItem: any) => (
+            <Flex key={dataItem.id} className='group-item' justify='around'>
               <div className='desc'>
-                  <p className="title">{item.title}</p>
-                  <span className='info'>{item.desc}</span>
+                  <p className="title">{dataItem.title}</p>
+                  <span className='info'>{dataItem.desc}</span>
               </div>
-              <img src={BASE_URL + item.imgSrc} alt=""/>
+              <img src={BASE_URL + dataItem.imgSrc} alt=""/>
             </Flex>
           )}></Grid>
       </div>

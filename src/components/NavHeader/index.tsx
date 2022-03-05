@@ -1,11 +1,11 @@
 
 import { NavBar } from "antd-mobile";
 import { useNavigate } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import styles from './index.module.css'
 
 interface NavBarProps {
-  onLeftClick(): any,
+  onLeftClick?: () => void,
   children: string,
 }
 

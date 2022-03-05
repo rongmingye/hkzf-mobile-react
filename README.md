@@ -1,6 +1,6 @@
 ## 好客租房移动端
 
-> react + react hooks + ts + antd mobile + 百度地图api
+> react + hooks + ts + antd mobile + 百度地图api
 
 #### 项目介绍：
 > 本项目是一个在线租房项目，实现了类似链家等项目功能，解决用户租房的需求, 

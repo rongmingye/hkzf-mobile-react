@@ -15,15 +15,15 @@ function App() {
         {/* 配置路由 */}
         <Routes>
           {/* 默认路由，重定向 */}
-          <Route exact path="/" element={<Navigate to="/home" />} ></Route>
+          <Route path="/" element={<Navigate to="/home" />} ></Route>
           <Route path="/home" element={<Home />} >
-            <Route exact path="/home" element={<Index />}></Route>
+            <Route path="/home" element={<Index />}></Route>
             <Route path="/home/findhouse" element={<FindHouse />}></Route>
             <Route path="/home/news" element={<News />}></Route>
             <Route path="/home/mine" element={<Mine />}></Route>
           </Route>
-          <Route excat path="/citylist" element={<CityList />} />
-          <Route excat path="/map" element={<Map />} />
+          <Route path="/citylist" element={<CityList />} />
+          <Route path="/map" element={<Map />} />
         </Routes>
       </div>
     </Router>

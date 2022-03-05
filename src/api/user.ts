@@ -1,7 +1,7 @@
 import http from '../config/http'
 
 export default {
-  getUserInfo(userId: string | number) {
-    return http.get(`/user/${userId}`)
+  getUserInfo<T>(userId: string | number) {
+    return http.get<T>(`/user/${userId}`)
   },
 } 

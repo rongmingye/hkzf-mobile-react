@@ -34,18 +34,18 @@ export default function Search() {
     }
 
     return (
-        <Flex className='search-box'>
-          <Flex className="search">
-            <div className='location' onClick={() => handleLocation()}>
-              <span className='name'>{cityName}</span>
-              <i className='iconfont icon-arrow'></i>
-            </div>
-            <div className='form' onClick={()=> handleForm()}>
-              <i className="iconfont icon-seach"></i>
-              <span>请输入小区或者地址</span>
-            </div>
-          </Flex> 
-          <i className='iconfont icon-map' onClick={()=> handleMap()}></i> 
+      <Flex className='search-box'>
+        <Flex className="search">
+          <div className='location' onClick={() => handleLocation()}>
+            <span className='name'>{cityName}</span>
+            <i className='iconfont icon-arrow'></i>
+          </div>
+          <div className='form' onClick={()=> handleForm()}>
+            <i className="iconfont icon-seach"></i>
+            <span>请输入小区或者地址</span>
+          </div>
+        </Flex> 
+        <i className='iconfont icon-map' onClick={()=> handleMap()}></i> 
       </Flex>
     )
 }
