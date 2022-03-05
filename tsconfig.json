@@ -16,8 +16,7 @@
     "src/**/*.js",
     "src/**/*.ts",
     "src/**/*.tsx",
-  ]
-  ,
+  ],
    /**指定不编译目录**/ 
   "exclude": [
     "node_modules"
