@@ -16,7 +16,7 @@
 3. 首页模块
 4. 城市选择模块
 
-### 1 项目准备
+### 1 项目创建
 
 #### 1.1 项目介绍
 技术栈
@@ -27,6 +27,13 @@
 - 其他组件库：react-vitualized, formik+yup, react-spring等
 - 百度地图api
 
+相关文档
+- https://create-react-app.bootcss.com/docs/getting-started
+- https://react.docschina.org/docs/getting-started.html
+- https://github.com/remix-run/react-router/blob/main/docs/getting-started/tutorial.md
+- https://antd-mobile-doc-v2.gitee.io/docs/react/introduce-cn
+- https://lbsyun.baidu.com/index.php?title=jspopularGL
+
 #### 1.2 项目搭建
 本地接口部署
 - 创建并导入数据：数据库名称hkzf，source hkzf.sql
@@ -36,20 +43,24 @@
 - 测试接口：在接口地址 http://localhost:8080
 
 
-初始化项目
+#### 初始化项目
 - 初始化项目 npx create-react-app hkzf-mobile-react
 - 启动项目 npm start
-- 跳转项目中的src目录结构
+- 创建项目中的src目录结构
 
+```js
+// 使用create-react-app创建项目
+npx create-react-app hkzf-mobile-react
 ```
-assets: 资源（图片，字体图标等）
-components: 公共组件
-pages: 页面
-utils: 工具
-App.js: 根组件（配置路由信息）
-index.css: 全局样式
-index.html: 项目入口文件（渲染跟组件，导入组件）
-```
+
+项目目录
+- assets: 资源（图片，字体图标等）
+- components: 公共组件
+- pages: 页面
+- utils: 工具
+- App.js: 根组件（配置路由信息）
+- index.css: 全局样式
+- index.html: 项目入口文件（渲染跟组件，导入组件）
 
 #### 1.3 组件库准备
 - 安装antd-mobile
@@ -57,20 +68,71 @@ index.html: 项目入口文件（渲染跟组件，导入组件）
 - 在index.js中导入组件库样式
 
 ``` js
+// 安装依赖
 npm i -D antd-mobile
 
+// src/index.js, 导入样式
+import 'antd-mobile/dist/antd-mobile.css'
+
+// 在组件中使用
 import { Button } from 'antd-mobile'
 
 <Button>登录</Button>
-
-import 'antd-mobile/dist/antd-mobile.css'
 ```
 
 #### 1.4 路由配置
-- 安装路由：npm i -D react-router-dom
-- 导入路由组件: Router / Route / Link
-- 在pages创建页面组件: Home/index.js CityList/index.js
-- 使用 Route 组件配置页面
+
+```js
+// 安装路由
+npm i -D react-router-dom
+
+// 在pages创建页面组件: Home/index.js CityList/index.js
+
+// 导入 
+import { 
+  BrowserRouter as Router, 
+  HashBouter,
+  Routes, 
+  Route, 
+  Link, 
+  Navigate,
+  Outlet,
+  useNavigate,
+  useLocation,
+  useParams,
+  useSearchParams,
+  useRoutes,
+} from 'react-router-dom'
+
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        {/* 配置路由 */}
+        <Routes>
+          {/* 默认路由，重定向 */}
+          <Route path="/" element={<Navigate to="/home" />} ></Route>
+          <Route path="/home" element={<Home />} >
+            <Route path="/home" element={<Index />}></Route>
+            <Route path="/home/findhouse" element={<FindHouse />}></Route>
+            <Route path="/home/news" element={<News />}></Route>
+            <Route path="/home/mine" element={<Mine />}></Route>
+          </Route>
+          <Route path="/citylist" element={<CityList />} />
+          <Route path="/map" element={<Map />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+const navigate = useNavigate() // useNavigate方法跳转
+const location = useLocation() // location参数
+const params = useParams() // 地址栏参数获取
+
+{/* 渲染子路由 */}
+<Outlet />
+```
 
 #### 1.5 外观和样式调整
 
@@ -175,6 +237,45 @@ localCity.get(res = > {
 })
 ```
 
+## 第二部分功能点
+- 能够在百度地图中展示当前定位城市
+- 能够使用地图完成房源信息绘制
+- 能够展示城市所有区的房源数据
+- 能够过封装找房页面的条件筛选栏组件
+- 能够使用react-spring组件实现动画效果
+- 能够完成房屋详情页面的数据展示
+
+- 地图找房模块
+- 列表找房模块
+- 房屋详情模块
+
+### 地图找房
+业务：使用百度地图API实现地图找房
+功能：
+- 展示当前定位城市
+- 展示该城市所有区的房源
+- 展示某区下所有镇的房源
+- 展示某镇下所有小区的房源
+- 展示某小区下的房源数据列表
+
+难点：百度地图找房标注，缩放级别，缩放事件等的使用  
+
+#### 根据展示当前定位城市
+- 获取当前定位城市
+- 使用地址解析器解析当前城市坐标
+- 调用centerAndZoom() 方法在地图中展示当前城市
+- 在地图中展示该城市，并添加比例尺和平移缩放组件
+
+#### 地图找房
+功能分析
+- 获取房源数据，渲染覆盖物
+- 点击覆盖物：1放大地图 2获取下一级数据，渲染下一级覆盖物
+- 区/镇：点击事件中，清楚现有覆盖物，创建新的覆盖物
+- 小区：不清楚覆盖物，移动地图，展示该小区下的房源列表
+
+### 列表找房模块
+
+### 房屋详情模块
 #### 总结
 1. 项目准备：部署本地接口，脚手架初始化项目，antd-mobile, 路由。
 2. 项目整体布局：分析两种布局，使用嵌套路由实现带Tab布局。
